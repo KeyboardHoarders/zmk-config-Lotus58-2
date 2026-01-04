@@ -10,6 +10,20 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/pointing.h>
 
+// The keybindings takes inspiration from the following resources:
+//
+// Keybindings inspired by https://github.com/manna-harbour/miryoku
+// Timer-less home row mod inspired by https://github.com/urob/zmk-config
+// Symbol layer according to https://getreuer.info/posts/keyboards/symbol-layer/index.html
+
+#define L_DEF 0
+#define L_SYM 1
+#define L_NAV 2
+#define L_NUM 3
+#define L_MEDIA 4
+// Define a custom gaming layer to avoid tap-hold trigger conflicts when gaming
+#define L_GAME 5
+
 /*
 // Encoders
 
