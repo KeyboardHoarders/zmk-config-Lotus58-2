@@ -28,20 +28,11 @@
 // Encoders
 
 &sensors { triggers-per-rotation = <30>; };
-
 &left_encoder { steps = <60>; };
-
 &right_encoder { steps = <60>; };
 */
+
 / {
-    combos {
-        compatible = "zmk,combos";
-        combo_dsklg {
-            timeout-ms = <100>;
-            key-positions = <24 52>;
-            layers = <0>;
-            bindings = <&kp LGUI>;
-        };
     };
 
     behaviors {
