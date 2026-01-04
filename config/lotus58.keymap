@@ -33,26 +33,15 @@
 */
 
 / {
+    behaviors {
     };
 
-    behaviors {
-        fofunc: four_ffour {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N4>, <&kp F4>;
-            mods = <(MOD_LALT|MOD_RALT)>;
-        };
-        sleft: s_left {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp S>, <&kp LEFT>;
-            mods = <(MOD_LGUI|MOD_RGUI)>;
-        };
-        fright: f_right {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp F>, <&kp RIGHT>;
-            mods = <(MOD_LGUI|MOD_RGUI)>;
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        // When both layer 1 and 2 (Symbols and Navigation) are pressed, enabled layer 3 (Numbers)
+        tri_layer {
+            if-layers = <L_SYM, L_NAV>;
+            then-layer = <L_NUM>;
         };
     };
 
@@ -62,9 +51,9 @@
         default_layer {
             display-name = "Default Layer";
             bindings = <
-&kp ESC   &kp N1 &kp N2   &kp N3     &fofunc   &kp N5                               &kp N6    &kp N7      &kp N8    &kp N9   &kp N0   &kp EQUAL
+&kp ESC   &kp N1 &kp N2   &kp N3     &kp N4   &kp N5                               &kp N6    &kp N7      &kp N8    &kp N9   &kp N0   &kp EQUAL
 &kp TAB   &kp Q  &kp W    &kp E      &kp R     &kp T                                &kp Y     &kp U       &kp I     &kp O    &kp P    &kp LBKT
-&kp LSHFT &kp A  &sleft   &kp D      &fright   &kp G      &trans         &kp C_MUTE     &kp H     &kp J       &kp K     &kp L    &kp SEMI &mt RSHFT SQT
+&kp LSHFT &kp A  &kp S    &kp D      &kp F     &kp G      &trans         &kp C_MUTE     &kp H     &kp J       &kp K     &kp L    &kp SEMI &mt RSHFT SQT
 &kp LCTRL &kp Z  &kp X    &kp C      &kp V     &kp B      &kp LBKT     &kp RBKT   &kp N     &kp M       &kp COMMA &kp DOT  &kp FSLH &mt RCTRL BSLH
                           &kp LGUI  &kp LALT  &mo 1  &kp SPACE      &kp RET  &mo 2  &kp DEL  &kp LGUI
             >;
@@ -72,8 +61,8 @@
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
-        lower_layer {
-            display-name = "Lower Layer";
+        symbol_layer {
+            display-name = "Symbol Layer";
             bindings = <
 &kp GRAVE  &kp F1    &kp F2    &kp F3      &kp F4     &kp F5                     &kp F6        &kp F7     &kp F8    &kp F9     &kp F10   &kp PLUS
 &trans     &kp EXCL  &kp HOME  &kp UP      &kp END    &kp PRCNT                  &kp C_VOL_UP  &kp PG_UP  &kp INS   &kp CARET  &kp PSCRN &kp MINUS
@@ -85,8 +74,8 @@
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp C_NEXT C_PREV>;
         };
 
-        raise_layer {
-            display-name = "Raise Layer";
+        navigation_layer {
+            display-name = "Navigation Layer";
             bindings = <
 &bt BT_CLR_ALL &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                    &out OUT_TOG  &out OUT_USB  &out OUT_BLE  &trans     &sys_reset  &bootloader
 &trans     &kp INS      &kp PSCRN    &kp K_CMENU  &sys_reset       &studio_unlock                          &kp PG_UP     &trans        &kp UP        &trans     &trans  &trans
@@ -97,8 +86,9 @@
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
-        adjust_layer {
-            display-name = "Adjust Layer";
+
+        number_layer {
+            display-name = "Number Layer";
             bindings = <
 &trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
 &trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
