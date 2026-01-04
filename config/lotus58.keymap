@@ -129,22 +129,4 @@
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
     };
-        extra_layer {
-            display-name = "Extra Layer";
-// ------------------------------------------------------------------------------------------------------------
-// |BTCLR| BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |OUTTOG|OUTUSB| OUTBT |      | RESET | FLASH |
-// |     | INS  | PSCR | GUI   | RESET |      |                | PGUP |      |   ^   |      |       |       |
-// |     | ALT  | CTRL | SHIFT | FLASH | CAPS |      |  |      | PGDN |   <- |   v   |  ->  |  DEL  | BSPC  |
-// |     | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |  |>  |  <|<| | |>|> |       |       |
-//                     |       |       |      |      |  |      |      |      |       |
-            bindings = <
-&trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
-&trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
-&trans     &trans     &trans    &trans    &trans  &trans     &trans   &trans    &trans     &trans      &trans      &trans  &trans &trans
-&trans     &trans   &trans    &trans   &trans  &trans       &trans   &trans    &trans        &trans      &trans    &trans &trans  &trans
-                                     &trans       &trans       &trans       &trans   &trans    &trans        &trans        &trans
-            >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
-        };
 };
