@@ -50,6 +50,7 @@
 
         default_layer {
             display-name = "Default Layer";
+
             bindings = <
 &kp TILDE  &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                            &kp N6  &kp N7   &kp N8     &kp N9   &kp N0    &kp EQUAL
 &kp TAB    &kp Q   &kp W   &kp E     &kp R     &kp T                             &kp Y   &kp U    &kp I      &kp O    &kp P     &kp LBKT
@@ -63,6 +64,7 @@
 
         symbol_layer {
             display-name = "Symbol Layer";
+
             bindings = <
 &kp GRAVE  &kp F1    &kp F2    &kp F3      &kp F4     &kp F5                     &kp F6        &kp F7     &kp F8    &kp F9     &kp F10   &kp PLUS
 &trans     &kp EXCL  &kp HOME  &kp UP      &kp END    &kp PRCNT                  &kp C_VOL_UP  &kp PG_UP  &kp INS   &kp CARET  &kp PSCRN &kp MINUS
@@ -76,6 +78,7 @@
 
         navigation_layer {
             display-name = "Navigation Layer";
+
             bindings = <
 &bt BT_CLR_ALL &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                    &out OUT_TOG  &out OUT_USB  &out OUT_BLE  &trans     &sys_reset  &bootloader
 &trans     &kp INS      &kp PSCRN    &kp K_CMENU  &sys_reset       &studio_unlock                          &kp PG_UP     &trans        &kp UP        &trans     &trans  &trans
@@ -89,6 +92,7 @@
 
         number_layer {
             display-name = "Number Layer";
+
             bindings = <
 &trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
 &trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
