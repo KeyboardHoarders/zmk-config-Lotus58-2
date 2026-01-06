@@ -1,59 +1,81 @@
-/*
- * Copyright (c) 2022 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
-
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/pointing.h>
 
+/*               58 KEY MATRIX / LAYOUT MAPPING
+  ╭────────────────────────────┬────────────────────────────╮
+  │  0   1   2   3   4   5     │      6   7   8   9  10  11 │
+  │ 12  13  14  15  16  17     │     18  19  20  21  22  23 │
+  │ 24  25  26  27  28  29  30 │ 31  32  33  34  35  36  37 │
+  │ 38  39  40  41  42  43  44 │ 45  46  47  48  49  50  51 │
+  ╰───────────╮ 52  53  54  55 │ 56  57  58  59 ╭───────────╯
+              ╰────────────────┴────────────────╯
+*/
+
+#define LEFT_KEYS 0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 30 38 39 40 41 42 43 44
+#define RIGHT_KEYS 6 7 8 9 10 11 18 19 20 21 22 23 31 32 33 34 35 36 37 45 46 47 48 49 50 51
+
+// The keybindings are an amalgamation of the following resources:
+// https://github.com/manna-harbour/miryoku
+// https://github.com/urob/zmk-config
+// https://getreuer.info/posts/keyboards/symbol-layer/index.html
+
+#define L_DEF 0
+#define L_SYM 1
+#define L_NAV 2
+#define L_NUM 3
+#define L_GAME 4
+
+\
 /*
 // Encoders
-
 &sensors { triggers-per-rotation = <30>; };
-
 &left_encoder { steps = <60>; };
-
 &right_encoder { steps = <60>; };
 */
 
 / {
-    combos {
-        compatible = "zmk,combos";
-
-        combo_dsklg {
-            timeout-ms = <100>;
-            key-positions = <24 52>;
-            layers = <0>;
-            bindings = <&kp LGUI>;
+    behaviors {
+        tlt: thumb_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <230>;
+            bindings = <&mo>, <&kp>;
+            display-name = "Thumb Layer Tap";
+        };
+        hml: home_row_mod_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <RIGHT_KEYS>;
+            hold-trigger-on-release;
+        };
+        hmr: home_row_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            require-prior-idle-ms = <150>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <LEFT_KEYS>;
+            hold-trigger-on-release;
         };
     };
 
-    behaviors {
-        fofunc: four_ffour {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N4>, <&kp F4>;
-
-            mods = <(MOD_LALT|MOD_RALT)>;
-        };
-
-        sleft: s_left {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp S>, <&kp LEFT>;
-
-            mods = <(MOD_LGUI|MOD_RGUI)>;
-        };
-
-        fright: f_right {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp F>, <&kp RIGHT>;
-
-            mods = <(MOD_LGUI|MOD_RGUI)>;
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        // When both layer 1 and 2 (Symbols and Navigation) are pressed, enabled layer 3 (Numbers)
+        tri_layer {
+            if-layers = <L_SYM L_NAV>;
+            then-layer = <L_NUM>;
         };
     };
 
@@ -62,117 +84,63 @@
 
         default_layer {
             display-name = "Default Layer";
-
-            //   ------------------------------------------------------------------------------------------------------------
-            //  0|  ESC  |  1  |  2  |  3   |  4   |  5   |                     |  6   |  7    |  8    |  9   |   0   |   =   | 11
-            // 12|  TAB  |  Q  |  W  |  E   |  R   |  T   |                     |  Y   |  U    |  I    |  O   |   P   |   [   | 23
-            // 24|  SFT  |  A  |  S  |  D   |  F   |  G   |  RESET  |  | RESET  |  H   |  J    |  K    |  L   |   ;   | ' SFT | 37
-            // 38|  CTRL |  Z  |  X  |  C   |  V   |  B   |  MUTE   |  | PLAY   |  N   |  M    |  ,    |  .   |   /   | \ CTRL| 51
-            // 52                    |ENT RS|  ALT | SPACE|DELETE LW|  |ENTER RS| BSPC |  ] LW | RGUI  |                        59
-
             bindings = <
-&kp ESC    &kp N1  &kp N2  &kp N3    &fofunc   &kp N5                         &kp N6  &kp N7   &kp N8     &kp N9   &kp N0    &kp EQUAL
-&kp TAB    &kp Q   &kp W   &kp E     &kp R     &kp T                          &kp Y   &kp U    &kp I      &kp O    &kp P     &kp LBKT
-&kp LSHFT  &kp A   &sleft  &kp D     &fright   &kp G   &trans     &kp C_MUTE  &kp H   &kp J    &kp K      &kp L    &kp SEMI  &mt RSHFT SQT
-&kp LCTRL  &kp Z   &kp X   &kp C     &kp V     &kp B   &kp LBKT   &kp RBKT    &kp N   &kp M    &kp COMMA  &kp DOT  &kp FSLH  &mt RCTRL BSLH
-                           &kp LGUI  &kp LALT  &mo 1   &kp SPACE  &kp RET     &mo 2   &kp DEL  &kp LGUI
+&kp TILDE  &kp N1        &kp N2       &kp N3       &kp N4         &kp N5                                 &kp N6           &kp N7   &kp N8     &kp N9   &kp N0    &mo PLUS
+&kp TAB    &kp Q         &kp W        &kp E        &kp R          &kp T                                  &kp Y            &kp U    &kp I      &kp O    &kp P     &kp LBKT
+&kp ESC    &hml LCTRL A  &hml LALT S  &hml LGUI D  &hml LSHIFT F  &kp G           &trans     &kp C_MUTE  &kp H            &kp J    &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LSHFT  &kp Z         &kp X        &kp C        &kp V          &kp B           &kp LBKT   &kp RBKT    &kp N            &kp M    &kp COMMA  &kp DOT  &kp FSLH  &mt RSHFT BSLH
+                                      &kp LGUI     &kp LALT       &tlt L_NAV TAB  &kp SPACE  &kp RET     &tlt L_SYM BSPC  &kp DEL  &kp LGUI
             >;
-
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
-        lower_layer {
-            display-name = "Lower Layer";
-
-            // ------------------------------------------------------------------------------------------------------------
-            // | `     |  F1 |  F2 |  F3  |  F4  |  F5  |                   |  F6  |  F7   |  F8   |  F9  |  F10  |  F11  |
-            // |       |  !  | HOME|   ^  |  END |  %   |                   | VOL^ |  PGUP |  INS  |  ^   |  PSCR |   -   |
-            // |       |  #  |  <- |   v  | ->   |  $   |        |  |       | VOLv |    <- |   ^   |  ->  |   ~   |   _   |
-            // |       |  @  |  -  |  (   |  )   |  &   |        |  |       | MUTE |  PGDN |   v   |  :   |   *   |   |   |
-            //                     |  F11 |      |      |        |  |       |      |       |  F12  |
-
+        // TODO: Implement home row mod for symbol layer
+        symbol_layer {
+            display-name = "Symbol Layer";
             bindings = <
-&kp GRAVE  &kp F1    &kp F2     &kp F3    &kp F4     &kp F5                     &kp F6        &kp F7     &kp F8    &kp F9     &kp F10    &kp PLUS
-&trans     &kp EXCL  &kp HOME   &kp UP    &kp END    &kp PRCNT                  &kp C_VOL_UP  &kp PG_UP  &kp INS   &kp CARET  &kp PSCRN  &kp MINUS
-&trans     &kp HASH  &kp LEFT   &kp DOWN  &kp RIGHT  &kp DLLR   &trans  &trans  &kp C_VOL_DN  &kp LEFT   &kp UP    &kp RIGHT  &kp TILDE  &kp UNDER
-&trans     &kp AT    &kp MINUS  &kp LBRC  &kp RBRC   &kp AMPS   &trans  &trans  &kp C_MUTE    &kp PG_DN  &kp DOWN  &kp COLON  &kp STAR   &kp PIPE
-                                &kp F11   &trans     &trans     &trans  &trans  &trans        &trans     &kp F12
+&trans  &trans         &trans         &trans      &trans        &trans                        &trans      &trans       &trans        &trans     &trans             &trans
+&trans  &kp LS(TILDE)  &kp TILDE      &kp LS(N3)  &kp LS(N7)    &kp LS(NUBS)                  &kp LS(N6)  &kp LS(LBKT) &kp LS(RBKT)  &kp LBKT   &kp RBKT           &trans
+&trans  &kp LS(N1)     &kp UNDER &kp  LS(SEMI)    &kp LS(PLUS)  &kp LS(N4)    &trans  &trans  &kp LS(N2)  &kp LS(N9)   &kp LS(N0)    &kp UNDER  &kp SEMI           &trans
+&trans  &kp LS(N5)     &kp LS(FSLH)   &kp LS(N8)  &kp PLUS      &kp NUBS      &trans  &trans  &kp FSLH    &kp MINUS    &kp LT        &kp GT     &kp DOUBLE_QUOTES  &trans
+                                      &trans      &trans        &trans        &trans  &trans  &trans      &trans       &trans
             >;
-
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp C_NEXT C_PREV>;
         };
 
-        raise_layer {
-            display-name = "Raise Layer";
-
-            // ------------------------------------------------------------------------------------------------------------
-            // |BTCLR| BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |OUTTOG|OUTUSB| OUTBT |      | RESET | FLASH |
-            // |     | INS  | PSCR | GUI   | RESET |      |                | PGUP |      |   ^   |      |       |       |
-            // |     | ALT  | CTRL | SHIFT | FLASH | CAPS |      |  |      | PGDN |   <- |   v   |  ->  |  DEL  | BSPC  |
-            // |     | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |  |>  |  <|<| | |>|> |       |       |
-            //                     |       |       |      |      |  |      |      |      |       |
-
+        nav_and_media_layer {
+            display-name = "Navigation and Media Layer";
             bindings = <
-&bt BT_CLR_ALL  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                    &out OUT_TOG  &out OUT_USB  &out OUT_BLE  &trans      &sys_reset  &bootloader
-&trans          &kp INS       &kp PSCRN     &kp K_CMENU   &sys_reset    &studio_unlock                  &kp PG_UP     &trans        &kp UP        &trans      &trans      &trans
-&trans          &kp LALT      &kp LCTRL     &kp LSHFT     &bootloader   &kp CLCK        &trans  &trans  &kp PG_DN     &kp LEFT      &kp DOWN      &kp RIGHT   &kp DEL     &kp BSPC
-&trans          &kp K_UNDO    &kp K_CUT     &kp K_COPY    &kp K_PASTE   &trans          &trans  &trans  &trans        &kp C_PP      &kp C_PREV    &kp C_NEXT  &trans      &trans
-                                            &trans        &trans        &trans          &trans  &trans  &trans        &trans        &trans
+&trans  &trans     &trans    &trans    &trans      &trans                   &trans         &trans          &trans         &trans        &tog L_GAME    &studio_unlock
+&trans  &none      &none     &none     &none       &none                    &kp C_AC_REDO  &kp C_AC_PASTE  &kp C_AC_COPY  &kp C_AC_CUT  &kp C_AC_UNDO  &trans
+&trans  &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHIFT  &none   &trans   &trans  &kp CAPSLOCK   &kp LEFT        &kp DOWN       &kp UP        &kp RIGHT      &trans
+&trans  &none      &none     &none     &none       &none   &trans   &trans  &kp INS        &kp HOME        &kp PG_DN      &kp PG_UP     &kp END        &trans
+                             &trans    &trans      &trans  &trans   &trans  &trans         &trans          &trans
             >;
-
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
-        adjust_layer {
-            display-name = "Adjust Layer";
-
-            // ------------------------------------------------------------------------------------------------------------
-            // |BTCLR| BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |OUTTOG|OUTUSB| OUTBT |      | RESET | FLASH |
-            // |     | INS  | PSCR | GUI   | RESET |      |                | PGUP |      |   ^   |      |       |       |
-            // |     | ALT  | CTRL | SHIFT | FLASH | CAPS |      |  |      | PGDN |   <- |   v   |  ->  |  DEL  | BSPC  |
-            // |     | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |  |>  |  <|<| | |>|> |       |       |
-            //                     |       |       |      |      |  |      |      |      |       |
-
+        number_layer {
+            display-name = "Number Layer";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans    &trans    &trans      &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans    &trans    &trans      &trans                  &trans  &kp N7  &kp N8  &kp N9  &trans  &trans
+&trans  &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHIFT  &trans  &trans  &trans  &kp N0  &kp N4  &kp N5  &kp N6  &trans  &trans
+&trans  &trans     &trans    &trans    &trans      &trans  &trans  &trans  &trans  &kp N1  &kp N2  &kp N3  &trans  &trans
+                            &trans     &trans      &trans  &trans  &trans  &trans  &trans  &trans
             >;
-
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
-        layer_4 {
+        gaming_layer {
+            display-name = "Gaming Layer";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&kp ESC    &kp N1  &kp N2  &kp N3     &kp N4     &kp N5                   &none  &none  &none  &none  &tog L_GAME  &none
+&none      &kp Q   &kp W   &kp E      &kp R      &kp T                    &none  &none  &none  &none  &none        &none
+&kp LSHFT  &kp A   &kp S   &kp D      &kp F      &kp G      &none  &none  &none  &none  &none  &none  &none        &none
+&kp LCTRL  &kp Z   &kp X   &kp C      &kp V      &kp V      &none  &none  &none  &none  &none  &none  &none        &none
+                           &kp SPACE  &kp SPACE  &kp SPACE  &none  &none  &none  &none  &none
             >;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
-    };
-
-    extra_layer {
-        display-name = "Extra Layer";
-
-        // ------------------------------------------------------------------------------------------------------------
-        // |BTCLR| BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |OUTTOG|OUTUSB| OUTBT |      | RESET | FLASH |
-        // |     | INS  | PSCR | GUI   | RESET |      |                | PGUP |      |   ^   |      |       |       |
-        // |     | ALT  | CTRL | SHIFT | FLASH | CAPS |      |  |      | PGDN |   <- |   v   |  ->  |  DEL  | BSPC  |
-        // |     | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |  |>  |  <|<| | |>|> |       |       |
-        //                     |       |       |      |      |  |      |      |      |       |
-
-        bindings = <
-&trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
-&trans &trans &trans &trans &trans &trans                    &trans  &trans  &trans  &trans     &trans  &trans
-&trans     &trans     &trans    &trans    &trans  &trans     &trans   &trans    &trans     &trans      &trans      &trans  &trans &trans
-&trans     &trans   &trans    &trans   &trans  &trans       &trans   &trans    &trans        &trans      &trans    &trans &trans  &trans
-                                     &trans       &trans       &trans       &trans   &trans    &trans        &trans        &trans
-        >;
-
-        sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
     };
 };
