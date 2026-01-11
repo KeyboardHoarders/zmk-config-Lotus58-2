@@ -1,0 +1,252 @@
+layout: {zmk_keyboard: lotus58}
+layers:
+  Default Layer:
+  - ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', +, TAB, Q]
+  - - W
+    - E
+    - R
+    - T
+    - Y
+    - U
+    - I
+    - O
+    - P
+    - '['
+    - ESC
+    - {t: A, h: LCTRL}
+    - {t: S, h: LALT}
+    - {t: D, h: LGUI}
+  - - {t: F, h: LSHIFT}
+    - G
+    - {t: ▽, type: trans}
+    - MUTE
+    - H
+    - {t: J, h: RSHIFT}
+    - {t: K, h: RGUI}
+    - {t: L, h: RALT}
+    - {t: ;, h: RCTL}
+    - ''''
+    - LSHFT
+    - Z
+    - X
+    - C
+  - - V
+    - B
+    - '['
+    - ']'
+    - N
+    - M
+    - ','
+    - .
+    - /
+    - {t: \, h: RSHFT}
+    - LALT
+    - LGUI
+    - {t: TAB, h: Navigation and Media Layer}
+    - SPACE
+  - - RET
+    - {t: BSPC, h: Symbol Layer}
+    - DEL
+    - LGUI
+  Symbol Layer:
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - '`'
+  - - '~'
+    - Sft+3
+    - Sft+7
+    - Sft+\
+    - Sft+6
+    - Sft+[
+    - Sft+]
+    - '['
+    - ']'
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - Sft+1
+    - _
+    - Sft+;
+  - - '='
+    - Sft+4
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - Sft+2
+    - Sft+9
+    - Sft+0
+    - _
+    - ;
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - Sft+5
+    - Sft+/
+    - Sft+8
+  - - +
+    - \
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - /
+    - '-'
+    - <
+    - '>'
+    - '"'
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {type: held}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  Navigation and Media Layer:
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - ''
+  - - ''
+    - ''
+    - ''
+    - ''
+    - AC REDO
+    - AC PASTE
+    - AC COPY
+    - AC CUT
+    - AC UNDO
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - LCTRL
+    - LALT
+    - LGUI
+  - - LSHIFT
+    - ''
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - LEFT
+    - DOWN
+    - UP
+    - RIGHT
+    - CAPS LOCK
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - ''
+    - ''
+    - ''
+  - - ''
+    - ''
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - INS
+    - HOME
+    - PG DN
+    - PG UP
+    - END
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  Number Layer:
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - '7'
+    - '8'
+    - '9'
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - LCTRL
+    - LALT
+    - LGUI
+  - - LSHIFT
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - '0'
+    - '4'
+    - '5'
+    - '6'
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - '1'
+    - '2'
+    - '3'
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {type: held}
+    - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {type: held}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+  Gaming Layer:
+  - - ESC
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - ''
+    - ''
+    - ''
+    - ''
+    - {t: Gaming Layer, h: toggle}
+    - ''
+    - ''
+    - Q
+  - [W, E, R, T, '', '', '', '', '', '', LSHFT, A, S, D]
+  - [F, G, '', '', '', '', '', '', '', '', LCTRL, Z, X, C]
+  - [V, V, '', '', '', '', '', '', '', '', SPACE, SPACE, SPACE, '']
+  - ['', '', '', '']
